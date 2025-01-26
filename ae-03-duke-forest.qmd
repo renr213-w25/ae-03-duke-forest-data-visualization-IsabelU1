@@ -1,5 +1,6 @@
 ---
 title: "AE 03: Duke Forest + data visualization"
+author:"Isabel Ulrich"
 ---
 
 ```{r}
@@ -8,6 +9,8 @@ title: "AE 03: Duke Forest + data visualization"
 
 library(tidyverse)
 library(openintro)
+library(dplyr)
+library(stringr)
 ```
 
 ## Exercise 1
@@ -25,7 +28,7 @@ Luckily, you can help them answer this question with data visualization!
 #| label: garage
 #| eval: false
 
-duke_forest |>
+duke_forest <- duke_forest |>
   mutate(garage = if_else(str_detect(parking, "Garage"),   "Garage", "No garage"))
 ```
 
@@ -37,10 +40,13 @@ duke_forest |>
 ```{r}
 #| label: price-garage
 
-# add code here
+ggplot(duke_forest, aes(x=price, fill=garage))+
+  geom_histogram(binwidth=50000)+
+  facet_wrap(~garage)+
+  labs(x="Price of House ($)", title = "Prices of Houses in Duke Forest with Garages and no Garages")+
+  theme(legend.position = "none")
 ```
-
-Add narrative here...
+Based on the graph there seems to be no large differnce in prices of house on weather it has a garage or not. Both graphs show an average price around $500000. The price of houses does not change between having a garage or not. 
 
 ::: callout-important
 Now is a good time to render, commit, and push.
